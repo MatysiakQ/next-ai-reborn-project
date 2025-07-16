@@ -61,6 +61,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// NextAI brand colors
+				nextai: {
+					cyan: 'hsl(var(--nextai-cyan))',
+					'cyan-dark': 'hsl(var(--nextai-cyan-dark))',
+					'cyan-light': 'hsl(var(--nextai-cyan-light))',
+					dark: 'hsl(var(--nextai-dark))',
+					'dark-lighter': 'hsl(var(--nextai-dark-lighter))',
 				}
 			},
 			borderRadius: {
