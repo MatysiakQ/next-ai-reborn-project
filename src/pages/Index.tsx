@@ -46,7 +46,7 @@ const Index = () => {
   };
 
   return (
-    <div className="bg-background">
+    <div className="bg-background">{/* NextAI Landing Page */}
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-nextai-dark/20">
         <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-nextai-cyan/10 to-transparent animate-pulse"></div>
