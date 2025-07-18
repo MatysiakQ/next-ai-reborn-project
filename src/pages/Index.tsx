@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { 
   Brain, 
   Zap, 
@@ -14,8 +14,6 @@ import {
   BarChart3, 
   Cog, 
   Globe,
-  Check,
-  Star,
   ArrowRight,
   Play,
   Mail,
@@ -25,8 +23,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import SubscriptionPlans from '@/components/SubscriptionPlans';
 
 const Index = () => {
   const { user, subscription } = useAuth();
@@ -277,64 +275,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {subscriptionPlans.map((plan, index) => (
-              <Card key={plan.id} className={`relative p-8 ${index === 1 ? 'border-primary shadow-lg scale-105' : ''}`}>
-                {index === 1 && (
-                  <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    Najczęściej wybierany pakiet
-                  </Badge>
-                )}
-                {plan.name === 'Enterprise' && (
-                  <div className="absolute -top-3 right-4">
-                    <span className="text-2xl">👑</span>
-                  </div>
-                )}
-                
-                <CardHeader>
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <CardDescription>{plan.description}</CardDescription>
-                </CardHeader>
-                
-                <CardContent className="space-y-6">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold">
-                      {plan.name === 'Enterprise' ? (
-                        'Indywidualna wycena'
-                      ) : (
-                        <>
-                          {Math.floor((isYearly ? plan.price_yearly : plan.price_monthly) / 100)} PLN
-                          <span className="text-lg font-normal text-muted-foreground">/msc</span>
-                        </>
-                      )}
-                    </div>
-                    {isYearly && plan.price_yearly && plan.name !== 'Enterprise' && (
-                      <div className="text-sm text-muted-foreground">
-                        Oszczędzasz {Math.floor(((plan.price_monthly * 12 - plan.price_yearly) / 100))} PLN rocznie
-                      </div>
-                    )}
-                  </div>
-
-                  <ul className="space-y-3">
-                    {(plan.features as string[]).map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start space-x-3">
-                        <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button
-                    className="w-full"
-                    variant={index === 1 ? "default" : "outline"}
-                    onClick={() => handleSubscribe(plan.id)}
-                  >
-                    {plan.name === 'Enterprise' ? 'Skontaktuj się z nami' : 'Wybierz subskrypcję'}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <SubscriptionPlans />
 
           <div className="text-center mt-12">
             <p className="text-muted-foreground mb-4">
