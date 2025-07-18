@@ -27,48 +27,17 @@ import { useToast } from '@/hooks/use-toast';
 import SubscriptionPlans from '@/components/SubscriptionPlans';
 
 const Index = () => {
-  const { user, subscription } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [subscriptionPlans, setSubscriptionPlans] = useState<any[]>([]);
-  const [isYearly, setIsYearly] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
     message: ''
   });
 
-  useEffect(() => {
-    fetchSubscriptionPlans();
-  }, []);
-
-  const fetchSubscriptionPlans = async () => {
-    const { data } = await supabase
-      .from('subscription_plans')
-      .select('*')
-      .eq('is_active', true)
-      .order('price_monthly', { ascending: true });
-    
-    if (data) {
-      setSubscriptionPlans(data);
-    }
-  };
-
-  const handleSubscribe = (planId: string) => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
-    // TODO: Implement Stripe checkout
-    toast({
-      title: "Wkrótce dostępne!",
-      description: "Integracja Stripe będzie dodana w następnym kroku.",
-    });
-  };
-
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement contact form submission
     toast({
       title: "Wiadomość wysłana!",
       description: "Dziękujemy za kontakt. Odpowiemy wkrótce.",
@@ -258,21 +227,6 @@ const Index = () => {
               Wybierz pakiet, który najlepiej odpowiada Twoim potrzebom. 
               Każdy z nich oferuje różne funkcjonalności i wsparcie.
             </p>
-            
-            <div className="flex items-center justify-center space-x-4 mb-8">
-              <span className={`${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>Miesięcznie</span>
-              <Button
-                variant="outline"
-                onClick={() => setIsYearly(!isYearly)}
-                className="relative"
-              >
-                <div className={`w-12 h-6 rounded-full transition-colors ${isYearly ? 'bg-primary' : 'bg-muted'}`}>
-                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${isYearly ? 'translate-x-6' : ''}`} />
-                </div>
-              </Button>
-              <span className={`${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>Rocznie</span>
-              {isYearly && <Badge variant="secondary">Oszczędzasz do 20%</Badge>}
-            </div>
           </div>
 
           <SubscriptionPlans />
