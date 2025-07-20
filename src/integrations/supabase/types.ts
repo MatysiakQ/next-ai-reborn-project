@@ -25,6 +25,7 @@ export type Database = {
           is_premium: boolean | null
           is_published: boolean | null
           order_index: number | null
+          required_subscription_tier: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -40,6 +41,7 @@ export type Database = {
           is_premium?: boolean | null
           is_published?: boolean | null
           order_index?: number | null
+          required_subscription_tier?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
@@ -55,6 +57,7 @@ export type Database = {
           is_premium?: boolean | null
           is_published?: boolean | null
           order_index?: number | null
+          required_subscription_tier?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
