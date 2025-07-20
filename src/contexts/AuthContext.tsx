@@ -119,6 +119,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const refreshSubscription = async () => {
     if (user) {
+      // First try to check with Stripe
+      try {
+        const { data, error } = await supabase.functions.invoke('check-subscription');
+        if (!error && data) {
+          console.log('Subscription checked with Stripe:', data);
+        }
+      } catch (error) {
+        console.log('Error checking subscription with Stripe:', error);
+      }
+      
+      // Then fetch from database
       await fetchSubscription(user.id);
     }
   };

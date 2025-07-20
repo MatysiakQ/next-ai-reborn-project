@@ -113,10 +113,7 @@ const Courses = () => {
       return;
     }
 
-    toast({
-      title: "Rozpoczynanie kursu",
-      description: `Uruchamianie kursu: ${course.title}`,
-    });
+    navigate(`/course/${course.id}`);
   };
 
   useEffect(() => {
