@@ -22,7 +22,6 @@ const Header = () => {
   const navigation = [
     { name: 'Strona główna', href: '/' },
     { name: 'Kursy', href: '/courses' },
-    { name: 'Pakiety', href: '/#packages' },
     { name: 'O nas', href: '/about' },
     { name: 'Kontakt', href: '/contact' },
   ];
