@@ -49,7 +49,7 @@ const Courses = () => {
 
   // Check if user has access to a specific tier
   const hasAccessToTier = (requiredTier: string): boolean => {
-    if (!user) return requiredTier === 'free';
+    if (!user) return false; // Niezalogowani użytkownicy nie mają dostępu do żadnych kursów
     
     if (requiredTier === 'free') return true;
     
@@ -377,8 +377,23 @@ const Courses = () => {
           </TabsContent>
         </Tabs>
 
+        {/* CTA for non-logged in users */}
+        {!user && (
+          <Card className="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+            <CardContent className="pt-6 text-center">
+              <h3 className="text-2xl font-bold mb-2">Zaloguj się, aby uzyskać dostęp do darmowych kursów</h3>
+              <p className="text-muted-foreground mb-6">
+                Stwórz darmowe konto i rozpocznij naukę AI już dziś
+              </p>
+              <Button size="lg" onClick={() => navigate('/auth')}>
+                Zaloguj się
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
         {/* CTA for non-subscribers */}
-        {(!user || !subscription?.is_subscribed) && (
+        {user && !subscription?.is_subscribed && (
           <Card className="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
             <CardContent className="pt-6 text-center">
               <h3 className="text-2xl font-bold mb-2">Odblokuj wszystkie kursy</h3>
