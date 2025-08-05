@@ -5,14 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Brain, 
+  Bot, 
   Zap, 
   Shield, 
   Users, 
-  Link, 
   TrendingUp, 
   BarChart3, 
-  Cog, 
+  MessageSquare, 
   Globe,
   ArrowRight,
   Play,
@@ -25,7 +24,11 @@ import {
   Database,
   Terminal,
   Lock,
-  Wifi
+  Wifi,
+  Clock,
+  DollarSign,
+  CheckCircle,
+  Calendar
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -63,32 +66,32 @@ const Index = () => {
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="space-y-8 animate-fade-in">
             <Badge className="px-6 py-2 text-sm font-mono bg-primary/20 text-primary border-primary/50 neon-glow">
-              <Terminal className="mr-2 h-4 w-4" />
-              SYSTEM ONLINE • AI POWERED
+              <Bot className="mr-2 h-4 w-4" />
+              AI AUTOMATION • SYSTEM ONLINE
             </Badge>
             
             <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold font-mono tracking-tight">
-              <span className="gradient-text neon-text">NEXTH4CK</span>
+              <span className="gradient-text neon-text">NEXTAI</span>
               <br />
-              <span className="text-foreground">AI ACADEMY</span>
+              <span className="text-foreground">AUTOMATION</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-mono leading-relaxed">
-              {'>'} Inicjalizacja sekwencji uczenia...
+              {'>'} Inicjalizacja systemu automatyzacji...
               <br />
-              {'>'} Ładowanie zaawansowanych modułów AI
+              {'>'} Ładowanie modułów AI dla biznesu
               <br />
-              {'>'} <span className="text-neon-cyan animate-neon-flicker">DOSTĘP PRZYZNANY</span>
+              {'>'} <span className="text-neon-cyan animate-neon-flicker">AUTOMATYZACJA AKTYWNA</span>
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
               <Button 
                 size="lg" 
                 className="px-8 py-4 text-lg font-mono neon-glow hover:neon-glow-magenta transition-all duration-300 group"
-                onClick={() => navigate('/courses')}
+                onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <Code className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                START HACKING
+                <Bot className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                ROZPOCZNIJ AUTOMATYZACJĘ
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
@@ -96,10 +99,10 @@ const Index = () => {
                 variant="outline" 
                 size="lg" 
                 className="px-8 py-4 text-lg font-mono border-primary/50 hover:bg-primary/10 hover:neon-glow transition-all duration-300"
-                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => navigate('/automations')}
               >
-                <Play className="mr-2 h-5 w-5" />
-                SYSTEM INFO
+                <Zap className="mr-2 h-5 w-5" />
+                ZOBACZ AUTOMATYZACJE
               </Button>
             </div>
           </div>
@@ -107,84 +110,158 @@ const Index = () => {
         
         {/* Floating code elements */}
         <div className="absolute top-20 left-10 text-neon-cyan font-mono text-sm opacity-50 animate-neon-flicker">
-          {'> neural_network.py'}
+          {'> automation_bot.py'}
         </div>
         <div className="absolute top-40 right-10 text-neon-magenta font-mono text-sm opacity-50 animate-neon-flicker">
-          {'> ai_training.js'}
+          {'> sales_ai.js'}
         </div>
         <div className="absolute bottom-40 left-20 text-neon-green font-mono text-sm opacity-50 animate-neon-flicker">
-          {'> quantum_ai.cpp'}
+          {'> business_optimizer.cpp'}
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 px-4 relative">
+      {/* Benefits Section */}
+      <section id="benefits" className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
-              <Cpu className="mr-2 h-4 w-4" />
-              CORE MODULES
+              <TrendingUp className="mr-2 h-4 w-4" />
+              KORZYŚCI AUTOMATYZACJI
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">SYSTEM</span> FEATURES
+              <span className="gradient-text">ZWIĘKSZ</span> WYDAJNOŚĆ
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Zaawansowane algorytmy uczenia maszynowego
+              {'>'} AI pracujące 24/7 na rzecz Twojego biznesu
               <br />
-              {'>'} Interaktywne laboratoria hackingowe
+              {'>'} Automatyczne optymalizacje i analizy
               <br />
-              {'>'} Real-time monitoring postępów
+              {'>'} Wzrost przychodów o 300% średnio
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: Clock,
+                title: "Oszczędność Czasu",
+                description: "80% mniej czasu na powtarzalne zadania",
+                color: "neon-cyan",
+                stat: "80%"
+              },
+              {
+                icon: DollarSign,
+                title: "Redukcja Kosztów",
+                description: "Zmniejszenie kosztów operacyjnych o 60%",
+                color: "neon-magenta",
+                stat: "60%"
+              },
+              {
+                icon: TrendingUp,
+                title: "Wzrost Sprzedaży",
+                description: "Średni wzrost konwersji o 250%",
+                color: "neon-green",
+                stat: "250%"
+              },
+              {
+                icon: Shield,
+                title: "Bezpieczeństwo",
+                description: "99.9% redukcja błędów ludzkich",
+                color: "neon-yellow",
+                stat: "99.9%"
+              }
+            ].map((benefit, index) => (
+              <Card key={index} className="glass-effect hover:neon-glow transition-all duration-300 group border-border/50 text-center">
+                <CardHeader>
+                  <div className={`inline-flex p-4 rounded-lg bg-primary/20 text-primary mb-4 mx-auto group-hover:animate-glow-pulse`}>
+                    <benefit.icon className="h-8 w-8" />
+                  </div>
+                  <div className="text-3xl font-bold font-mono text-primary mb-2">{benefit.stat}</div>
+                  <CardTitle className="text-lg font-mono text-foreground">{benefit.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground font-mono text-sm">{benefit.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Automation Types Section */}
+      <section className="py-20 px-4 bg-muted/20 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
+              <Bot className="mr-2 h-4 w-4" />
+              TYPY AUTOMATYZACJI
+            </Badge>
+            <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
+              <span className="gradient-text">NASZE</span> ROZWIĄZANIA
+            </h2>
+            <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
+              {'>'} Kompleksowe boty AI dla każdego biznesu
+              <br />
+              {'>'} Dostosowane do Twojej branży
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: Brain,
-                title: "Neural Networks",
-                description: "Głębokie sieci neuronowe i architektury transformerów",
-                color: "neon-cyan"
+                icon: DollarSign,
+                title: "Automatyzacja Sprzedaży",
+                description: "Lead qualification, follow-up, CRM integration",
+                features: ["Scoring leadów", "Auto follow-up", "Integracja CRM"]
               },
               {
-                icon: Shield,
-                title: "Cybersecurity",
-                description: "Etyczne hakowanie i penetration testing",
-                color: "neon-magenta"
+                icon: BarChart3,
+                title: "Marketing AI",
+                description: "Content generation, ad optimization, analytics",
+                features: ["Generowanie treści", "Optymalizacja reklam", "Analityka"]
+              },
+              {
+                icon: MessageSquare,
+                title: "Obsługa Klienta",
+                description: "24/7 chatboty, ticket routing, sentiment analysis",
+                features: ["Chatbot 24/7", "Auto routing", "Analiza sentymentu"]
               },
               {
                 icon: Database,
-                title: "Big Data",
-                description: "Analiza wielkich zbiorów danych i ML pipelines",
-                color: "neon-green"
-              },
-              {
-                icon: Code,
-                title: "AI Programming",
-                description: "Python, TensorFlow, PyTorch i OpenAI API",
-                color: "neon-yellow"
+                title: "Przetwarzanie Danych",
+                description: "ETL processes, reporting, data analysis",
+                features: ["ETL procesy", "Auto raporty", "Analiza danych"]
               },
               {
                 icon: Zap,
-                title: "Quantum Computing",
-                description: "Obliczenia kwantowe i algorytmy Shora",
-                color: "neon-purple"
+                title: "Workflow Automation",
+                description: "Process optimization, task assignment, approvals",
+                features: ["Optymalizacja procesów", "Przydzielanie zadań", "Approvals"]
               },
               {
                 icon: Globe,
-                title: "IoT Hacking",
-                description: "Bezpieczeństwo urządzeń IoT i embedded systems",
-                color: "neon-cyan"
+                title: "E-commerce AI",
+                description: "Product recommendations, inventory, pricing",
+                features: ["Rekomendacje produktów", "Zarządzanie magazynem", "Pricing"]
               }
-            ].map((feature, index) => (
+            ].map((automation, index) => (
               <Card key={index} className="glass-effect hover:neon-glow transition-all duration-300 group border-border/50">
-                <CardHeader className="text-center">
+                <CardHeader>
                   <div className={`inline-flex p-4 rounded-lg bg-primary/20 text-primary mb-4 group-hover:animate-glow-pulse`}>
-                    <feature.icon className="h-8 w-8" />
+                    <automation.icon className="h-8 w-8" />
                   </div>
-                  <CardTitle className="text-xl font-mono text-foreground">{feature.title}</CardTitle>
+                  <CardTitle className="text-xl font-mono text-foreground">{automation.title}</CardTitle>
+                  <CardDescription className="font-mono">{automation.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground font-mono text-sm">{feature.description}</p>
+                  <ul className="space-y-2">
+                    {automation.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center gap-2 text-sm font-mono">
+                        <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
             ))}
@@ -193,14 +270,14 @@ const Index = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 bg-muted/20 relative">
+      <section className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "10K+", label: "Active Hackers", icon: Users },
-              { number: "99.9%", label: "Uptime", icon: Wifi },
-              { number: "50+", label: "AI Modules", icon: Cpu },
-              { number: "256-bit", label: "Encryption", icon: Lock }
+              { number: "500+", label: "Zautomatyzowanych Firm", icon: Users },
+              { number: "99.9%", label: "Uptime Botów", icon: Wifi },
+              { number: "50+", label: "Typów Automatyzacji", icon: Bot },
+              { number: "24/7", label: "Wsparcie Techniczne", icon: MessageCircle }
             ].map((stat, index) => (
               <div key={index} className="group">
                 <div className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-300">
@@ -220,17 +297,17 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <BarChart3 className="mr-2 h-4 w-4" />
-              SUBSCRIPTION PLANS
+              PAKIETY AUTOMATYZACJI
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">CHOOSE</span> YOUR PATH
+              <span className="gradient-text">WYBIERZ</span> SWÓJ PLAN
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Wybierz plan dostępu do platformy hackingowej
+              {'>'} Różne poziomy automatyzacji dla Twojego biznesu
               <br />
-              {'>'} Różne poziomy uprawnień systemowych
+              {'>'} Skalowalne rozwiązania AI
               <br />
-              {'>'} Pełne wsparcie techniczne 24/7
+              {'>'} Pełne wsparcie i optymalizacje
             </p>
           </div>
 
@@ -244,15 +321,15 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <MessageCircle className="mr-2 h-4 w-4" />
-              CONTACT PROTOCOL
+              SKONTAKTUJ SIĘ Z NAMI
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">INITIATE</span> CONTACT
+              <span className="gradient-text">DARMOWA</span> KONSULTACJA
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Nawiąż bezpieczne połączenie z naszym zespołem
+              {'>'} Omów swoje potrzeby automatyzacji z ekspertami
               <br />
-              {'>'} Wszystkie kanały komunikacji są szyfrowane
+              {'>'} Otrzymaj spersonalizowaną strategię AI
             </p>
           </div>
 
@@ -261,23 +338,23 @@ const Index = () => {
             <Card className="glass-effect p-8">
               <CardHeader className="pb-6">
                 <CardTitle className="text-2xl font-mono text-foreground">
-                  {'>'} SECURE_MESSAGE.EXE
+                  {'>'} AUTOMATION_INQUIRY.EXE
                 </CardTitle>
                 <CardDescription className="font-mono">
-                  Wypełnij formularz aby wysłać zaszyfrowaną wiadomość
+                  Wypełnij formularz aby otrzymać bezpłatną konsultację
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-mono font-medium mb-2 text-foreground">
-                      USER_NAME:
+                      FIRMA/IMIĘ:
                     </label>
                     <Input
                       id="name"
                       value={contactForm.name}
                       onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                      placeholder="Enter your handle..."
+                      placeholder="Wprowadź nazwę firmy lub imię..."
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       required
                     />
@@ -285,14 +362,14 @@ const Index = () => {
                   
                   <div>
                     <label htmlFor="email" className="block text-sm font-mono font-medium mb-2 text-foreground">
-                      EMAIL_ADDRESS:
+                      EMAIL_KONTAKTOWY:
                     </label>
                     <Input
                       id="email"
                       type="email"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      placeholder="user@domain.com"
+                      placeholder="kontakt@firma.com"
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       required
                     />
@@ -300,22 +377,22 @@ const Index = () => {
                   
                   <div>
                     <label htmlFor="message" className="block text-sm font-mono font-medium mb-2 text-foreground">
-                      MESSAGE_BODY:
+                      OPIS_POTRZEB:
                     </label>
                     <Textarea
                       id="message"
                       rows={5}
                       value={contactForm.message}
                       onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
-                      placeholder="Compose your encrypted message..."
+                      placeholder="Opisz jakie procesy chcesz zautomatyzować..."
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       required
                     />
                   </div>
                   
                   <Button type="submit" className="w-full neon-glow font-mono">
-                    <Lock className="mr-2 h-4 w-4" />
-                    TRANSMIT_MESSAGE()
+                    <Calendar className="mr-2 h-4 w-4" />
+                    WYŚLIJ_ZAPYTANIE()
                   </Button>
                 </form>
               </CardContent>
@@ -324,10 +401,10 @@ const Index = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               {[
-                { icon: Mail, title: "EMAIL_PROTOCOL", info: "contact@nexthack.ai", desc: "Encrypted communication channel" },
-                { icon: Phone, title: "VOICE_CHANNEL", info: "+48 123 456 789", desc: "Direct line to mission control" },
-                { icon: MapPin, title: "PHYSICAL_LOCATION", info: "ul. Cyber 42, 00-001 Warsaw", desc: "Secure facility coordinates" },
-                { icon: Terminal, title: "SYSTEM_STATUS", info: "ONLINE • 24/7", desc: "Always ready for new connections" }
+                { icon: Mail, title: "EMAIL_BIZNESOWY", info: "automation@nextai.pl", desc: "Bezpośredni kontakt z ekspertami" },
+                { icon: Phone, title: "LINIA_KONSULTACYJNA", info: "+48 123 456 789", desc: "Rozmowa z doradcą automatyzacji" },
+                { icon: MapPin, title: "CENTRUM_AUTOMATYZACJI", info: "ul. AI 42, 00-001 Warszawa", desc: "Nasza centrala technologiczna" },
+                { icon: Bot, title: "STATUS_SYSTEMU", info: "ONLINE • 24/7", desc: "Boty pracują bez przerwy" }
               ].map((contact, index) => (
                 <Card key={index} className="glass-effect p-6 hover:neon-glow transition-all duration-300 group">
                   <div className="flex items-start space-x-4">
@@ -351,21 +428,32 @@ const Index = () => {
       <section className="py-20 px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold font-mono mb-6">
-            <span className="gradient-text">READY TO HACK</span> THE FUTURE?
+            <span className="gradient-text">GOTOWY NA</span> AUTOMATYZACJĘ?
           </h2>
           <p className="text-xl text-muted-foreground font-mono mb-8">
-            {'>'} Join the elite community of AI hackers
+            {'>'} Dołącz do firm, które już zautomatyzowały swoje procesy
             <br />
-            {'>'} Start your journey into the digital frontier
+            {'>'} Rozpocznij transformację cyfrową już dziś
           </p>
-          <Button 
-            size="lg" 
-            className="px-12 py-4 text-lg font-mono neon-glow hover:neon-glow-magenta transition-all duration-300"
-            onClick={() => navigate(user ? '/courses' : '/auth')}
-          >
-            <Terminal className="mr-2 h-5 w-5" />
-            {user ? 'ACCESS COURSES' : 'INITIALIZE ACCOUNT'}
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="px-12 py-4 text-lg font-mono neon-glow hover:neon-glow-magenta transition-all duration-300"
+              onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Bot className="mr-2 h-5 w-5" />
+              ROZPOCZNIJ AUTOMATYZACJĘ
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="px-12 py-4 text-lg font-mono border-primary/50 hover:bg-primary/10 hover:neon-glow transition-all duration-300"
+              onClick={() => navigate('/courses')}
+            >
+              <Code className="mr-2 h-5 w-5" />
+              ZOBACZ KURSY
+            </Button>
+          </div>
         </div>
       </section>
     </div>
