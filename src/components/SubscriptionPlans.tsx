@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Check, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -21,6 +22,7 @@ interface SubscriptionPlan {
 
 const SubscriptionPlans = () => {
   const { user, subscription } = useAuth();
+  const { t } = useThemeLanguage();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
@@ -128,19 +130,34 @@ const SubscriptionPlans = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-center space-x-4 mb-8">
-        <span className={`${!isYearly ? 'text-primary' : 'text-muted-foreground'}`}>Miesięcznie</span>
-        <Button
-          variant="outline"
-          onClick={() => setIsYearly(!isYearly)}
-          className="relative"
-        >
-          <div className={`w-12 h-6 rounded-full transition-colors ${isYearly ? 'bg-primary' : 'bg-muted'}`}>
-            <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${isYearly ? 'translate-x-6' : ''}`} />
-          </div>
-        </Button>
-        <span className={`${isYearly ? 'text-primary' : 'text-muted-foreground'}`}>Rocznie</span>
-        {isYearly && <Badge variant="secondary">Oszczędzasz do 20%</Badge>}
+      <div className="flex items-center justify-center gap-4 mb-8">
+        <span className={`font-mono transition-colors ${!isYearly ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
+          {t('pricing.monthly')}
+        </span>
+        <div className="relative">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsYearly(!isYearly)}
+            className={`relative w-14 h-7 p-0 border-2 transition-all ${
+              isYearly ? 'border-primary bg-primary/10' : 'border-muted-foreground bg-muted/50'
+            }`}
+          >
+            <div 
+              className={`absolute w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ease-in-out ${
+                isYearly ? 'translate-x-3.5' : 'translate-x-0.5'
+              }`} 
+            />
+          </Button>
+        </div>
+        <span className={`font-mono transition-colors ${isYearly ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
+          {t('pricing.yearly')}
+        </span>
+        {isYearly && (
+          <Badge variant="secondary" className="ml-2 bg-green-100 text-green-700 border-green-200">
+            {t('pricing.save')}
+          </Badge>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -158,7 +175,7 @@ const SubscriptionPlans = () => {
             >
               {isPopular && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  Najczęściej wybierany pakiet
+                  {t('pricing.popular')}
                 </Badge>
               )}
               
@@ -170,7 +187,7 @@ const SubscriptionPlans = () => {
 
               {isCurrentPlan && (
                 <Badge variant="secondary" className="absolute -top-3 right-4">
-                  Twój plan
+                  {t('pricing.current')}
                 </Badge>
               )}
               
@@ -216,14 +233,14 @@ const SubscriptionPlans = () => {
                   {checkoutLoading === plan.id ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Przekierowanie...
+                      {t('pricing.redirecting')}
                     </>
                   ) : isCurrentPlan ? (
-                    'Aktualny plan'
+                    t('pricing.current')
                   ) : plan.name === 'Enterprise' ? (
-                    'Skontaktuj się z nami'
+                    t('pricing.contact')
                   ) : (
-                    'Wybierz subskrypcję'
+                    t('pricing.choose')
                   )}
                 </Button>
               </CardContent>

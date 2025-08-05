@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu, X, User, LogOut, Settings, BookOpen } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
@@ -13,18 +14,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { LanguageToggle } from '@/components/ui/language-toggle';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, profile, subscription, signOut } = useAuth();
+  const { t } = useThemeLanguage();
   const navigate = useNavigate();
 
   const navigation = [
-    { name: 'Strona główna', href: '/' },
-    { name: 'Automatyzacja', href: '/automations' },
-    { name: 'Kursy', href: '/courses' },
-    { name: 'O nas', href: '/about' },
-    { name: 'Kontakt', href: '/contact' },
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.automations'), href: '/automations' },
+    { name: t('nav.courses'), href: '/courses' },
+    { name: t('nav.about'), href: '/about' },
+    { name: t('nav.contact'), href: '/contact' },
   ];
 
   const handleSignOut = async () => {
@@ -55,7 +59,9 @@ const Header = () => {
           </nav>
 
           {/* User Menu / Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
+            <ThemeToggle />
+            <LanguageToggle />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -87,7 +93,7 @@ const Header = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                     <User className="mr-2 h-4 w-4" />
-                    <span>Panel użytkownika</span>
+                    <span>{t('nav.dashboard')}</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/courses')}>
                     <BookOpen className="mr-2 h-4 w-4" />
@@ -102,157 +108,161 @@ const Header = () => {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => navigate('/admin')}>
                         <Settings className="mr-2 h-4 w-4" />
-                        <span>Panel administratora</span>
+                        <span>{t('nav.admin')}</span>
                       </DropdownMenuItem>
                     </>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Wyloguj się</span>
+                    <span>{t('nav.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" onClick={() => navigate('/auth')}>
-                  Zaloguj się
+                  {t('nav.login')}
                 </Button>
                 <Button onClick={() => navigate('/auth')}>
-                  Rozpocznij
+                  {t('nav.start')}
                 </Button>
               </div>
             )}
           </div>
 
           {/* Mobile Menu Button */}
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-lg font-bold">Menu</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <X className="h-6 w-6" />
-                  </Button>
-                </div>
-
-                <nav className="flex flex-col space-y-4">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="text-foreground hover:text-primary transition-colors py-2"
+          <div className="flex items-center space-x-2 md:hidden">
+            <ThemeToggle />
+            <LanguageToggle />
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-lg font-bold">Menu</span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
+                      <X className="h-6 w-6" />
+                    </Button>
+                  </div>
 
-                <div className="mt-auto pt-6 border-t">
-                  {user ? (
-                    <div className="space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage src={profile?.avatar_url} />
-                          <AvatarFallback>
-                            {profile?.full_name?.[0] || profile?.email?.[0] || user.email?.[0]}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="text-sm font-medium">
-                            {profile?.full_name || 'Użytkownik'}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {user.email}
-                          </p>
+                  <nav className="flex flex-col space-y-4">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="text-foreground hover:text-primary transition-colors py-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </nav>
+
+                  <div className="mt-auto pt-6 border-t">
+                    {user ? (
+                      <div className="space-y-4">
+                        <div className="flex items-center space-x-3">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={profile?.avatar_url} />
+                            <AvatarFallback>
+                              {profile?.full_name?.[0] || profile?.email?.[0] || user.email?.[0]}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="text-sm font-medium">
+                              {profile?.full_name || 'Użytkownik'}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {user.email}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                          onClick={() => {
-                            navigate('/dashboard');
-                            setMobileMenuOpen(false);
-                          }}
-                        >
-                          <User className="mr-2 h-4 w-4" />
-                          Panel użytkownika
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                          onClick={() => {
-                            navigate('/courses');
-                            setMobileMenuOpen(false);
-                          }}
-                        >
-                          <BookOpen className="mr-2 h-4 w-4" />
-                          Moje kursy
-                        </Button>
-                        {profile?.is_admin && (
+                        <div className="space-y-2">
                           <Button
                             variant="ghost"
                             className="w-full justify-start"
                             onClick={() => {
-                              navigate('/admin');
+                              navigate('/dashboard');
                               setMobileMenuOpen(false);
                             }}
                           >
-                            <Settings className="mr-2 h-4 w-4" />
-                            Panel administratora
+                            <User className="mr-2 h-4 w-4" />
+                            {t('nav.dashboard')}
                           </Button>
-                        )}
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                            onClick={() => {
+                              navigate('/courses');
+                              setMobileMenuOpen(false);
+                            }}
+                          >
+                            <BookOpen className="mr-2 h-4 w-4" />
+                            Moje kursy
+                          </Button>
+                          {profile?.is_admin && (
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start"
+                              onClick={() => {
+                                navigate('/admin');
+                                setMobileMenuOpen(false);
+                              }}
+                            >
+                              <Settings className="mr-2 h-4 w-4" />
+                              {t('nav.admin')}
+                            </Button>
+                          )}
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                            onClick={() => {
+                              handleSignOut();
+                              setMobileMenuOpen(false);
+                            }}
+                          >
+                            <LogOut className="mr-2 h-4 w-4" />
+                            {t('nav.logout')}
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start"
+                          className="w-full"
                           onClick={() => {
-                            handleSignOut();
+                            navigate('/auth');
                             setMobileMenuOpen(false);
                           }}
                         >
-                          <LogOut className="mr-2 h-4 w-4" />
-                          Wyloguj się
+                          {t('nav.login')}
+                        </Button>
+                        <Button
+                          className="w-full"
+                          onClick={() => {
+                            navigate('/auth');
+                            setMobileMenuOpen(false);
+                          }}
+                        >
+                          {t('nav.start')}
                         </Button>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      <Button
-                        variant="ghost"
-                        className="w-full"
-                        onClick={() => {
-                          navigate('/auth');
-                          setMobileMenuOpen(false);
-                        }}
-                      >
-                        Zaloguj się
-                      </Button>
-                      <Button
-                        className="w-full"
-                        onClick={() => {
-                          navigate('/auth');
-                          setMobileMenuOpen(false);
-                        }}
-                      >
-                        Rozpocznij
-                      </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
