@@ -148,9 +148,9 @@ All colors MUST be HSL.
   
   .neon-text {
     text-shadow: 
-      0 0 5px hsl(var(--neon-cyan)),
-      0 0 10px hsl(var(--neon-cyan)),
-      0 0 15px hsl(var(--neon-cyan));
+      0 0 4px hsl(var(--neon-cyan) / 0.4),
+      0 0 8px hsl(var(--neon-cyan) / 0.3),
+      0 0 12px hsl(var(--neon-cyan) / 0.2);
   }
   
   .cyber-grid {

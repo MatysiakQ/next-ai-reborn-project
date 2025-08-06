@@ -47,6 +47,16 @@ const translations = {
     'pricing.contact': 'Skontaktuj się z nami',
     'pricing.choose': 'Wybierz subskrypcję',
     'pricing.redirecting': 'Przekierowanie...',
+    
+    // Hero section
+    'hero.badge': 'AI AUTOMATYZACJA • SYSTEM ONLINE',
+    'hero.title': 'NEXTAI',
+    'hero.subtitle': 'AUTOMATYZACJA',
+    'hero.description1': '> Inicjalizacja systemu automatyzacji...',
+    'hero.description2': '> Ładowanie modułów AI dla biznesu',
+    'hero.description3': '> AUTOMATYZACJA AKTYWNA',
+    'hero.start': 'ROZPOCZNIJ AUTOMATYZACJĘ',
+    'hero.view': 'ZOBACZ AUTOMATYZACJE',
   },
   en: {
     // Navigation
@@ -80,6 +90,16 @@ const translations = {
     'pricing.contact': 'Contact Us',
     'pricing.choose': 'Choose Plan',
     'pricing.redirecting': 'Redirecting...',
+    
+    // Hero section
+    'hero.badge': 'AI AUTOMATION • SYSTEM ONLINE',
+    'hero.title': 'NEXTAI',
+    'hero.subtitle': 'AUTOMATION',
+    'hero.description1': '> Initializing automation system...',
+    'hero.description2': '> Loading AI modules for business',
+    'hero.description3': '> AUTOMATION ACTIVE',
+    'hero.start': 'START AUTOMATION',
+    'hero.view': 'VIEW AUTOMATIONS',
   }
 };
 

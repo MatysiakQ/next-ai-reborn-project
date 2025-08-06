@@ -18,9 +18,11 @@ import {
   Shield
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useThemeLanguage } from "@/contexts/ThemeLanguageContext";
 
 const Automations = () => {
   const navigate = useNavigate();
+  const { t } = useThemeLanguage();
 
   const automationCategories = [
     {
@@ -147,12 +149,12 @@ const Automations = () => {
               optymalizując procesy, zwiększając sprzedaż i redukując koszty operacyjne.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="font-mono" onClick={() => navigate('/#packages')}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+              <Button size="lg" className="font-mono w-full sm:w-auto" onClick={() => navigate('/#packages')}>
                 <Bot className="mr-2 h-5 w-5" />
-                Rozpocznij Automatyzację
+                {t('hero.start')}
               </Button>
-              <Button size="lg" variant="outline" className="font-mono" onClick={() => navigate('/contact')}>
+              <Button size="lg" variant="outline" className="font-mono w-full sm:w-auto" onClick={() => navigate('/contact')}>
                 Darmowa Konsultacja
               </Button>
             </div>
@@ -209,7 +211,7 @@ const Automations = () => {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {category.bots.map((bot, botIndex) => (
                     <Card key={botIndex} className="border-l-4 border-l-primary hover:shadow-lg transition-all duration-300">
                       <CardHeader>
@@ -274,12 +276,12 @@ const Automations = () => {
             Dołącz do tysięcy firm, które już zautomatyzowały swoje procesy z NextAI
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="font-mono" onClick={() => navigate('/#packages')}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+            <Button size="lg" className="font-mono w-full sm:w-auto" onClick={() => navigate('/#packages')}>
               <ArrowRight className="mr-2 h-5 w-5" />
               Zobacz Pakiety
             </Button>
-            <Button size="lg" variant="outline" className="font-mono" onClick={() => navigate('/contact')}>
+            <Button size="lg" variant="outline" className="font-mono w-full sm:w-auto" onClick={() => navigate('/contact')}>
               <Calendar className="mr-2 h-5 w-5" />
               Umów Demo
             </Button>

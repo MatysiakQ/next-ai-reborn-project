@@ -33,12 +33,14 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 import SubscriptionPlans from '@/components/SubscriptionPlans';
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useThemeLanguage();
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -64,58 +66,58 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="space-y-8 animate-fade-in">
-            <Badge className="px-6 py-2 text-sm font-mono bg-primary/20 text-primary border-primary/50 neon-glow">
-              <Bot className="mr-2 h-4 w-4" />
-              AI AUTOMATION • SYSTEM ONLINE
+          <div className="space-y-6 sm:space-y-8 animate-fade-in">
+            <Badge className="px-4 sm:px-6 py-2 text-xs sm:text-sm font-mono bg-primary/20 text-primary border-primary/50 neon-glow">
+              <Bot className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+              {t('hero.badge')}
             </Badge>
             
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold font-mono tracking-tight">
-              <span className="gradient-text neon-text">NEXTAI</span>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold font-mono tracking-tight">
+              <span className="gradient-text neon-text">{t('hero.title')}</span>
               <br />
-              <span className="text-foreground">AUTOMATION</span>
+              <span className="text-foreground">{t('hero.subtitle')}</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-mono leading-relaxed">
-              {'>'} Inicjalizacja systemu automatyzacji...
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-mono leading-relaxed px-4">
+              {'>'} {t('hero.description1')}
               <br />
-              {'>'} Ładowanie modułów AI dla biznesu
+              {'>'} {t('hero.description2')}
               <br />
-              {'>'} <span className="text-neon-cyan animate-neon-flicker">AUTOMATYZACJA AKTYWNA</span>
+              {'>'} <span className="text-neon-cyan animate-neon-flicker">{t('hero.description3')}</span>
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center pt-6 sm:pt-8 px-4">
               <Button 
                 size="lg" 
-                className="px-8 py-4 text-lg font-mono neon-glow hover:neon-glow-magenta transition-all duration-300 group"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-mono neon-glow hover:neon-glow-magenta transition-all duration-300 group"
                 onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <Bot className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                ROZPOCZNIJ AUTOMATYZACJĘ
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Bot className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform" />
+                <span className="truncate">{t('hero.start')}</span>
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-8 py-4 text-lg font-mono border-primary/50 hover:bg-primary/10 hover:neon-glow transition-all duration-300"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-mono border-primary/50 hover:bg-primary/10 hover:neon-glow transition-all duration-300"
                 onClick={() => navigate('/automations')}
               >
-                <Zap className="mr-2 h-5 w-5" />
-                ZOBACZ AUTOMATYZACJE
+                <Zap className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="truncate">{t('hero.view')}</span>
               </Button>
             </div>
           </div>
         </div>
         
-        {/* Floating code elements */}
-        <div className="absolute top-20 left-10 text-neon-cyan font-mono text-sm opacity-50 animate-neon-flicker">
+        {/* Floating code elements - hidden on mobile */}
+        <div className="hidden md:block absolute top-20 left-4 lg:left-10 text-neon-cyan font-mono text-xs lg:text-sm opacity-50 animate-neon-flicker">
           {'> automation_bot.py'}
         </div>
-        <div className="absolute top-40 right-10 text-neon-magenta font-mono text-sm opacity-50 animate-neon-flicker">
+        <div className="hidden md:block absolute top-40 right-4 lg:right-10 text-neon-magenta font-mono text-xs lg:text-sm opacity-50 animate-neon-flicker">
           {'> sales_ai.js'}
         </div>
-        <div className="absolute bottom-40 left-20 text-neon-green font-mono text-sm opacity-50 animate-neon-flicker">
+        <div className="hidden md:block absolute bottom-40 left-4 lg:left-20 text-neon-green font-mono text-xs lg:text-sm opacity-50 animate-neon-flicker">
           {'> business_optimizer.cpp'}
         </div>
       </section>
@@ -140,7 +142,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[
               {
                 icon: Clock,
@@ -206,7 +208,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {[
               {
                 icon: DollarSign,
@@ -272,7 +274,7 @@ const Index = () => {
       {/* Stats Section */}
       <section className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center">
             {[
               { number: "500+", label: "Zautomatyzowanych Firm", icon: Users },
               { number: "99.9%", label: "Uptime Botów", icon: Wifi },
@@ -333,7 +335,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
             <Card className="glass-effect p-8">
               <CardHeader className="pb-6">
