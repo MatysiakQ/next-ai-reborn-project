@@ -1,7 +1,9 @@
 import { Users, Target, Award, Heart, Terminal, Cpu, Shield, Code } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 
 const About = () => {
+  const { t } = useThemeLanguage();
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background effects */}
@@ -14,19 +16,19 @@ const About = () => {
         <div className="max-w-6xl mx-auto text-center">
           <Badge className="mb-6 px-6 py-2 font-mono bg-accent/20 text-accent border-accent/50">
             <Users className="mr-2 h-4 w-4" />
-            ABOUT_PROTOCOL
+            {t('about.badge')}
           </Badge>
           
           <h1 className="text-4xl md:text-7xl font-bold font-mono mb-6">
-            <span className="gradient-text neon-text">WHO</span> WE ARE
+            <span className="gradient-text neon-text">{t('about.title')}</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-mono leading-relaxed">
-            {'>'} Zespół elite hackerów i specjalistów AI
+            {'>'} {t('about.description1')}
             <br />
-            {'>'} Misja: demokratyzacja wiedzy o sztucznej inteligencji
+            {'>'} {t('about.description2')}
             <br />
-            {'>'} <span className="text-neon-cyan animate-neon-flicker">STATUS: AKTYWNI</span>
+            {'>'} <span className="text-neon-cyan animate-neon-flicker">{t('about.description3')}</span>
           </p>
         </div>
       </section>
@@ -38,25 +40,22 @@ const About = () => {
             <div className="space-y-6">
               <Badge className="px-4 py-2 font-mono bg-primary/20 text-primary border-primary/50">
                 <Target className="mr-2 h-4 w-4" />
-                MISSION_STATEMENT
+                {t('about.mission.badge')}
               </Badge>
               
               <h2 className="text-3xl md:text-5xl font-bold font-mono">
-                <span className="gradient-text">OUR</span> MISSION
+                <span className="gradient-text">{t('about.mission.title')}</span>
               </h2>
               
               <div className="space-y-4 font-mono text-muted-foreground">
                 <p>
-                  {'>'} Wierzymy, że każdy hacker powinien mieć dostęp do najlepszych 
-                  materiałów edukacyjnych w dziedzinie AI i cybersecurity.
+                  {'>'} {t('about.mission.text1')}
                 </p>
                 <p>
-                  {'>'} Tworzymy kursy, które nie tylko uczą, ale inspirują do działania 
-                  i ciągłego rozwoju w świecie technologii.
+                  {'>'} {t('about.mission.text2')}
                 </p>
                 <p>
-                  {'>'} Nasz zespół składa się z ekspertów w różnych dziedzinach, 
-                  którzy dzielą się swoją wiedzą z globalną społecznością.
+                  {'>'} {t('about.mission.text3')}
                 </p>
               </div>
             </div>
@@ -65,12 +64,12 @@ const About = () => {
               <div className="glass-effect p-6 text-center hover:neon-glow transition-all duration-300 group">
                 <Users className="h-12 w-12 text-primary mx-auto mb-4 group-hover:animate-glow-pulse" />
                 <h3 className="text-2xl font-bold font-mono text-foreground mb-2">10K+</h3>
-                <p className="text-muted-foreground font-mono text-sm">ACTIVE USERS</p>
+                <p className="text-muted-foreground font-mono text-sm">{t('about.stats.users')}</p>
               </div>
               <div className="glass-effect p-6 text-center hover:neon-glow transition-all duration-300 group">
                 <Award className="h-12 w-12 text-primary mx-auto mb-4 group-hover:animate-glow-pulse" />
                 <h3 className="text-2xl font-bold font-mono text-foreground mb-2">50+</h3>
-                <p className="text-muted-foreground font-mono text-sm">AI MODULES</p>
+                <p className="text-muted-foreground font-mono text-sm">{t('about.stats.modules')}</p>
               </div>
             </div>
           </div>
@@ -83,10 +82,10 @@ const About = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <Code className="mr-2 h-4 w-4" />
-              CORE_VALUES
+              {t('about.values.badge')}
             </Badge>
             <h2 className="text-3xl md:text-5xl font-bold font-mono mb-6">
-              <span className="gradient-text">OUR</span> VALUES
+              <span className="gradient-text">{t('about.values.title')}</span>
             </h2>
           </div>
           
@@ -94,20 +93,20 @@ const About = () => {
             {[
               {
                 icon: Target,
-                title: "EXCELLENCE",
-                description: "Każdy moduł przechodzi przez rygorystyczny proces kontroli jakości, aby zapewnić najlepsze doświadczenie hackingowe.",
+                title: t('about.values.excellence'),
+                description: t('about.values.excellenceDesc'),
                 color: "neon-cyan"
               },
               {
                 icon: Users,
-                title: "COMMUNITY",
-                description: "Budujemy globalną społeczność hackerów AI, gdzie każdy może dzielić się wiedzą i wspierać innych w rozwoju.",
+                title: t('about.values.community'),
+                description: t('about.values.communityDesc'),
                 color: "neon-magenta"
               },
               {
                 icon: Heart,
-                title: "PASSION",
-                description: "Jesteśmy napędzani pasją do technologii i chęcią pomagania innym w odkrywaniu tajników AI.",
+                title: t('about.values.passion'),
+                description: t('about.values.passionDesc'),
                 color: "neon-green"
               }
             ].map((value, index) => (
@@ -131,34 +130,34 @@ const About = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <Terminal className="mr-2 h-4 w-4" />
-              TEAM_PROFILES
+              {t('about.team.badge')}
             </Badge>
             <h2 className="text-3xl md:text-5xl font-bold font-mono mb-6">
-              <span className="gradient-text">CORE</span> TEAM
+              <span className="gradient-text">{t('about.team.title')}</span>
             </h2>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Anna 'Cypher' Kowalska",
-                role: "CEO & Lead Hacker",
+                name: t('about.team.anna.name'),
+                role: t('about.team.anna.role'),
                 avatar: "bg-gradient-to-br from-neon-cyan to-primary",
-                desc: "10+ lat w cybersecurity i AI research. Specjalizuje się w neural networks i ethical hacking.",
+                desc: t('about.team.anna.desc'),
                 icon: Shield
               },
               {
-                name: "Michał 'Quantum' Nowak",
-                role: "CTO & AI Architect",
+                name: t('about.team.michal.name'),
+                role: t('about.team.michal.role'),
                 avatar: "bg-gradient-to-br from-neon-magenta to-accent",
-                desc: "Ekspert w quantum computing i deep learning. Twórca naszej platformy edukacyjnej.",
+                desc: t('about.team.michal.desc'),
                 icon: Cpu
               },
               {
-                name: "Katarzyna 'Neural' Wiśniewska",
-                role: "Head of Content",
+                name: t('about.team.katarzyna.name'),
+                role: t('about.team.katarzyna.role'),
                 avatar: "bg-gradient-to-br from-neon-green to-secondary",
-                desc: "Specjalistka od content creation i pedagogiki AI. Autorka kursów machine learning.",
+                desc: t('about.team.katarzyna.desc'),
                 icon: Code
               }
             ].map((member, index) => (
@@ -181,12 +180,12 @@ const About = () => {
       <section className="py-20 px-4 text-center relative">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold font-mono mb-6">
-            <span className="gradient-text">JOIN</span> THE REVOLUTION
+            <span className="gradient-text">{t('about.cta.title')}</span>
           </h2>
           <p className="text-xl text-muted-foreground font-mono mb-8">
-            {'>'} Stań się częścią elitarnej społeczności AI hackerów
+            {'>'} {t('about.cta.desc1')}
             <br />
-            {'>'} Rozpocznij swoją podróż w cyfrową przyszłość już dziś
+            {'>'} {t('about.cta.desc2')}
           </p>
         </div>
       </section>

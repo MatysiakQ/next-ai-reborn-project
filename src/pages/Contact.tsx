@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const Contact = () => {
     message: ''
   });
   const { toast } = useToast();
+  const { t } = useThemeLanguage();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -27,8 +29,8 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Message transmitted successfully!",
-      description: "Our cyber team will respond within 24 hours.",
+      title: t('contact.form.success'),
+      description: t('contact.form.successDesc'),
     });
     setFormData({
       name: '',
@@ -50,19 +52,19 @@ const Contact = () => {
         <div className="max-w-6xl mx-auto text-center">
           <Badge className="mb-6 px-6 py-2 font-mono bg-accent/20 text-accent border-accent/50">
             <Terminal className="mr-2 h-4 w-4" />
-            CONTACT_PROTOCOL
+            {t('contact.badge')}
           </Badge>
           
           <h1 className="text-4xl md:text-7xl font-bold font-mono mb-6">
-            <span className="gradient-text neon-text">INITIATE</span> CONTACT
+            <span className="gradient-text neon-text">{t('contact.title')}</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-mono leading-relaxed">
-            {'>'} Nawiąż bezpieczne połączenie z naszym cyber teamem
+            {'>'} {t('contact.description1')}
             <br />
-            {'>'} Wszystkie kanały komunikacji są szyfrowane end-to-end
+            {'>'} {t('contact.description2')}
             <br />
-            {'>'} <span className="text-neon-cyan animate-neon-flicker">TRANSMISJA GOTOWA</span>
+            {'>'} <span className="text-neon-cyan animate-neon-flicker">{t('contact.description3')}</span>
           </p>
         </div>
       </section>
@@ -76,17 +78,17 @@ const Contact = () => {
               <div>
                 <Badge className="mb-4 px-4 py-2 font-mono bg-primary/20 text-primary border-primary/50">
                   <MessageCircle className="mr-2 h-4 w-4" />
-                  COMMUNICATION_CHANNELS
+                  {t('contact.channels.badge')}
                 </Badge>
                 <h2 className="text-3xl font-bold font-mono text-foreground mb-6">
-                  <span className="gradient-text">CONNECT</span> WITH US
+                  <span className="gradient-text">{t('contact.channels.title')}</span>
                 </h2>
                 <p className="text-muted-foreground font-mono mb-8">
-                  {'>'} Wybierz preferowany kanał komunikacji
+                  {'>'} {t('contact.channels.desc1')}
                   <br />
-                  {'>'} Wszystkie zapytania są procesowane w czasie rzeczywistym
+                  {'>'} {t('contact.channels.desc2')}
                   <br />
-                  {'>'} SLA response time: {'<'} 24h
+                  {'>'} {t('contact.channels.desc3')}
                 </p>
               </div>
 
@@ -94,30 +96,30 @@ const Contact = () => {
                 {[
                   {
                     icon: Mail,
-                    title: "EMAIL_PROTOCOL",
+                    title: t('contact.channels.email'),
                     info: "contact@nexthack.ai",
-                    desc: "Encrypted communication channel",
+                    desc: t('contact.channels.emailDesc'),
                     color: "neon-cyan"
                   },
                   {
                     icon: Phone,
-                    title: "VOICE_CHANNEL",
+                    title: t('contact.channels.phone'),
                     info: "+48 123 456 789",
-                    desc: "Direct line to mission control",
+                    desc: t('contact.channels.phoneDesc'),
                     color: "neon-magenta"
                   },
                   {
                     icon: MapPin,
-                    title: "PHYSICAL_LOCATION",
+                    title: t('contact.channels.address'),
                     info: "ul. Cyber 42, 00-001 Warsaw",
-                    desc: "Secure facility coordinates",
+                    desc: t('contact.channels.addressDesc'),
                     color: "neon-green"
                   },
                   {
                     icon: Terminal,
-                    title: "SYSTEM_STATUS",
+                    title: t('contact.channels.status'),
                     info: "ONLINE • 24/7/365",
-                    desc: "Always ready for new connections",
+                    desc: t('contact.channels.statusDesc'),
                     color: "neon-yellow"
                   }
                 ].map((contact, index) => (
@@ -158,13 +160,13 @@ const Contact = () => {
               <CardHeader>
                 <Badge className="mb-2 px-3 py-1 font-mono bg-accent/20 text-accent border-accent/50 w-fit">
                   <Lock className="mr-2 h-3 w-3" />
-                  ENCRYPTED
+                  {t('contact.form.badge')}
                 </Badge>
                 <CardTitle className="font-mono text-foreground text-2xl">
-                  {'>'} SECURE_MESSAGE.EXE
+                  {t('contact.form.title')}
                 </CardTitle>
                 <CardDescription className="font-mono">
-                  {'>'} Wypełnij formularz aby wysłać zaszyfrowaną wiadomość do naszego zespołu
+                  {t('contact.form.desc')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -172,7 +174,7 @@ const Contact = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium font-mono text-foreground mb-2">
-                        USER_NAME:
+                        {t('contact.form.name')}
                       </label>
                       <Input
                         id="name"
@@ -181,13 +183,13 @@ const Contact = () => {
                         required
                         value={formData.name}
                         onChange={handleInputChange}
-                        placeholder="Enter your handle..."
+                        placeholder={t('contact.form.namePlaceholder')}
                         className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium font-mono text-foreground mb-2">
-                        EMAIL_ADDRESS:
+                        {t('contact.form.email')}
                       </label>
                       <Input
                         id="email"
@@ -204,7 +206,7 @@ const Contact = () => {
 
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium font-mono text-foreground mb-2">
-                      SUBJECT_LINE:
+                      {t('contact.form.subject')}
                     </label>
                     <Input
                       id="subject"
@@ -213,14 +215,14 @@ const Contact = () => {
                       required
                       value={formData.subject}
                       onChange={handleInputChange}
-                      placeholder="Message subject protocol..."
+                      placeholder={t('contact.form.subjectPlaceholder')}
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium font-mono text-foreground mb-2">
-                      MESSAGE_BODY:
+                      {t('contact.form.message')}
                     </label>
                     <Textarea
                       id="message"
@@ -229,14 +231,14 @@ const Contact = () => {
                       rows={6}
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Compose your encrypted message..."
+                      placeholder={t('contact.form.messagePlaceholder')}
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                     />
                   </div>
 
                   <Button type="submit" className="w-full neon-glow font-mono hover:neon-glow-magenta transition-all duration-300">
                     <Send className="mr-2 h-4 w-4" />
-                    TRANSMIT_MESSAGE()
+                    {t('contact.form.submit')}
                   </Button>
                 </form>
               </CardContent>

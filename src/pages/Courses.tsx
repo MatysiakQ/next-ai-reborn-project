@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useThemeLanguage } from "@/contexts/ThemeLanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -42,6 +43,7 @@ const Courses = () => {
   const { user, subscription } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useThemeLanguage();
   
   const [courses, setCourses] = useState<Course[]>([]);
   const [userAccess, setUserAccess] = useState<UserAccess[]>([]);
@@ -93,8 +95,8 @@ const Courses = () => {
     } catch (error) {
       console.error('Error fetching courses:', error);
       toast({
-        title: "Błąd",
-        description: "Nie udało się pobrać listy kursów.",
+        title: t('common.error'),
+        description: t('courses.errors.fetch'),
         variant: "destructive"
       });
     } finally {
@@ -105,8 +107,8 @@ const Courses = () => {
   const startCourse = (course: Course) => {
     if (!hasAccessToTier(course.required_subscription_tier)) {
       toast({
-        title: "Brak dostępu",
-        description: "Ten kurs wymaga wykupienia odpowiedniego pakietu.",
+        title: t('courses.errors.accessTitle'),
+        description: t('courses.errors.noAccess'),
         variant: "destructive"
       });
       navigate('/#packages');
@@ -146,10 +148,10 @@ const Courses = () => {
 
   const getTierLabel = (tier: string) => {
     switch (tier) {
-      case 'free': return 'Darmowe';
-      case 'basic': return 'Basic';
-      case 'pro': return 'Pro';
-      default: return 'Nieznany';
+      case 'free': return t('courses.tabs.free');
+      case 'basic': return t('courses.tabs.basic');
+      case 'pro': return t('courses.tabs.pro');
+      default: return 'Unknown';
     }
   };
 
@@ -196,8 +198,8 @@ const Courses = () => {
           <div className="flex items-center gap-2 mt-3">
             <Badge variant="outline" className="text-xs">
               <div className={`w-2 h-2 rounded-full mr-1 ${getDifficultyColor(course.difficulty_level)}`} />
-              {course.difficulty_level === 'beginner' ? 'Początkujący' : 
-               course.difficulty_level === 'intermediate' ? 'Średniozaawansowany' : 'Zaawansowany'}
+              {course.difficulty_level === 'beginner' ? t('courses.difficulty.beginner') : 
+               course.difficulty_level === 'intermediate' ? t('courses.difficulty.intermediate') : t('courses.difficulty.advanced')}
             </Badge>
             
             <Badge variant="secondary" className="text-xs">
@@ -216,7 +218,7 @@ const Courses = () => {
             {/* Progress bar placeholder */}
             <div className="space-y-1">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Postęp</span>
+                <span className="text-muted-foreground">{t('courses.progress')}</span>
                 <span className="text-muted-foreground">0%</span>
               </div>
               <Progress value={0} className="h-2" />
@@ -231,12 +233,12 @@ const Courses = () => {
               {isAccessible ? (
                 <>
                   <Play className="h-4 w-4 mr-2" />
-                  Rozpocznij kurs
+                  {t('courses.startCourse')}
                 </>
               ) : (
                 <>
                   <Lock className="h-4 w-4 mr-2" />
-                  Wymaga {getTierLabel(course.required_subscription_tier)}
+                  {t('courses.requires')} {getTierLabel(course.required_subscription_tier)}
                 </>
               )}
             </Button>
@@ -259,8 +261,8 @@ const Courses = () => {
           <div>
             <h2 className="text-2xl font-bold">{title}</h2>
             <p className="text-muted-foreground">
-              {sectionCourses.length} {sectionCourses.length === 1 ? 'kurs' : 'kursów'}
-              {!hasAccess && tier !== 'free' && ' - Wymaga subskrypcji'}
+              {sectionCourses.length} {sectionCourses.length === 1 ? t('courses.course') : t('courses.courses')}
+              {!hasAccess && tier !== 'free' && ' ' + t('courses.requiresSubscription')}
             </p>
           </div>
           {hasAccess && (
@@ -291,14 +293,14 @@ const Courses = () => {
         {/* Navigation */}
         <Link to="/dashboard" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Powrót do dashboard
+          {t('common.backToDashboard')}
         </Link>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">Kursy NextAI</h1>
+          <h1 className="text-4xl font-bold mb-4">{t('courses.title')}</h1>
           <p className="text-xl text-muted-foreground mb-6">
-            Rozwijaj swoje umiejętności AI z naszymi strukturalnymi kursami
+            {t('courses.subtitle')}
           </p>
 
           {/* User status info */}
@@ -307,17 +309,17 @@ const Courses = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold mb-1">Twój plan</h3>
+                    <h3 className="font-semibold mb-1">{t('courses.yourPlan')}</h3>
                     <p className="text-muted-foreground">
                       {subscription?.is_subscribed 
-                        ? `Plan ${subscription.subscription_plan?.name}` 
-                        : 'Plan darmowy'
+                        ? `${t('courses.tabs.' + subscription.subscription_plan?.name?.toLowerCase())} Plan` 
+                        : t('courses.freePlan')
                       }
                     </p>
                   </div>
                   {!subscription?.is_subscribed && (
                     <Button onClick={() => navigate('/#packages')}>
-                      Wykup subskrypcję
+                      {t('courses.buySubscription')}
                     </Button>
                   )}
                 </div>
@@ -328,26 +330,26 @@ const Courses = () => {
 
         <Tabs defaultValue="all" className="space-y-8">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="all">Wszystkie</TabsTrigger>
-            <TabsTrigger value="free">Darmowe</TabsTrigger>
-            <TabsTrigger value="basic">Basic</TabsTrigger>
-            <TabsTrigger value="pro">Pro</TabsTrigger>
+            <TabsTrigger value="all">{t('courses.tabs.all')}</TabsTrigger>
+            <TabsTrigger value="free">{t('courses.tabs.free')}</TabsTrigger>
+            <TabsTrigger value="basic">{t('courses.tabs.basic')}</TabsTrigger>
+            <TabsTrigger value="pro">{t('courses.tabs.pro')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="space-y-12">
             <CourseSection 
               tier="free" 
-              title="Kursy darmowe" 
+              title={t('courses.sections.free')} 
               icon={<BookOpen className="h-5 w-5" />} 
             />
             <CourseSection 
               tier="basic" 
-              title="Kursy Basic" 
+              title={t('courses.sections.basic')} 
               icon={<Star className="h-5 w-5" />} 
             />
             <CourseSection 
               tier="pro" 
-              title="Kursy Pro" 
+              title={t('courses.sections.pro')} 
               icon={<TrendingUp className="h-5 w-5" />} 
             />
           </TabsContent>
@@ -355,7 +357,7 @@ const Courses = () => {
           <TabsContent value="free">
             <CourseSection 
               tier="free" 
-              title="Kursy darmowe" 
+              title={t('courses.sections.free')} 
               icon={<BookOpen className="h-5 w-5" />} 
             />
           </TabsContent>
@@ -363,7 +365,7 @@ const Courses = () => {
           <TabsContent value="basic">
             <CourseSection 
               tier="basic" 
-              title="Kursy Basic" 
+              title={t('courses.sections.basic')} 
               icon={<Star className="h-5 w-5" />} 
             />
           </TabsContent>
@@ -371,7 +373,7 @@ const Courses = () => {
           <TabsContent value="pro">
             <CourseSection 
               tier="pro" 
-              title="Kursy Pro" 
+              title={t('courses.sections.pro')} 
               icon={<TrendingUp className="h-5 w-5" />} 
             />
           </TabsContent>
@@ -381,12 +383,12 @@ const Courses = () => {
         {!user && (
           <Card className="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
             <CardContent className="pt-6 text-center">
-              <h3 className="text-2xl font-bold mb-2">Zaloguj się, aby uzyskać dostęp do darmowych kursów</h3>
+              <h3 className="text-2xl font-bold mb-2">{t('courses.cta.login.title')}</h3>
               <p className="text-muted-foreground mb-6">
-                Stwórz darmowe konto i rozpocznij naukę AI już dziś
+                {t('courses.cta.login.desc')}
               </p>
               <Button size="lg" onClick={() => navigate('/auth')}>
-                Zaloguj się
+                {t('courses.cta.login.button')}
               </Button>
             </CardContent>
           </Card>
@@ -396,12 +398,12 @@ const Courses = () => {
         {user && !subscription?.is_subscribed && (
           <Card className="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
             <CardContent className="pt-6 text-center">
-              <h3 className="text-2xl font-bold mb-2">Odblokuj wszystkie kursy</h3>
+              <h3 className="text-2xl font-bold mb-2">{t('courses.cta.subscribe.title')}</h3>
               <p className="text-muted-foreground mb-6">
-                Wykup subskrypcję i uzyskaj dostęp do wszystkich kursów AI
+                {t('courses.cta.subscribe.desc')}
               </p>
               <Button size="lg" onClick={() => navigate('/#packages')}>
-                Zobacz pakiety
+                {t('courses.cta.subscribe.button')}
               </Button>
             </CardContent>
           </Card>
