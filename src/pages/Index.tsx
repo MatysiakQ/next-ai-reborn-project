@@ -50,8 +50,8 @@ const Index = () => {
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Wiadomość wysłana!",
-      description: "Dziękujemy za kontakt. Odpowiemy wkrótce.",
+      title: t('contact.form.success'),
+      description: t('contact.form.successDesc'),
     });
     setContactForm({ name: '', email: '', message: '' });
   };
@@ -128,17 +128,17 @@ const Index = () => {
           <div className="text-center mb-16 animate-fade-in">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <TrendingUp className="mr-2 h-4 w-4" />
-              KORZYŚCI AUTOMATYZACJI
+              {t('home.benefits.badge')}
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">ZWIĘKSZ</span> WYDAJNOŚĆ
+              <span className="gradient-text">{t('home.benefits.heading.strong')}</span> {t('home.benefits.heading.rest')}
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} AI pracujące 24/7 na rzecz Twojego biznesu
+              {'>'} {t('home.benefits.line1')}
               <br />
-              {'>'} Automatyczne optymalizacje i analizy
+              {'>'} {t('home.benefits.line2')}
               <br />
-              {'>'} Wzrost przychodów o 300% średnio
+              {'>'} {t('home.benefits.line3')}
             </p>
           </div>
 
@@ -146,31 +146,31 @@ const Index = () => {
             {[
               {
                 icon: Clock,
-                title: "Oszczędność Czasu",
-                description: "80% mniej czasu na powtarzalne zadania",
-                color: "neon-cyan",
-                stat: "80%"
+                title: t('home.benefit.time.title'),
+                description: t('home.benefit.time.desc'),
+                color: 'neon-cyan',
+                stat: t('home.benefit.time.stat')
               },
               {
                 icon: DollarSign,
-                title: "Redukcja Kosztów",
-                description: "Zmniejszenie kosztów operacyjnych o 60%",
-                color: "neon-magenta",
-                stat: "60%"
+                title: t('home.benefit.cost.title'),
+                description: t('home.benefit.cost.desc'),
+                color: 'neon-magenta',
+                stat: t('home.benefit.cost.stat')
               },
               {
                 icon: TrendingUp,
-                title: "Wzrost Sprzedaży",
-                description: "Średni wzrost konwersji o 250%",
-                color: "neon-green",
-                stat: "250%"
+                title: t('home.benefit.sales.title'),
+                description: t('home.benefit.sales.desc'),
+                color: 'neon-green',
+                stat: t('home.benefit.sales.stat')
               },
               {
                 icon: Shield,
-                title: "Bezpieczeństwo",
-                description: "99.9% redukcja błędów ludzkich",
-                color: "neon-yellow",
-                stat: "99.9%"
+                title: t('home.benefit.security.title'),
+                description: t('home.benefit.security.desc'),
+                color: 'neon-yellow',
+                stat: t('home.benefit.security.stat')
               }
             ].map((benefit, index) => (
               <Card key={index} className="glass-effect hover:neon-glow transition-all duration-300 group border-border/50 text-center">
@@ -196,15 +196,15 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <Bot className="mr-2 h-4 w-4" />
-              TYPY AUTOMATYZACJI
+              {t('home.types.badge')}
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">NASZE</span> ROZWIĄZANIA
+              <span className="gradient-text">{t('home.types.heading.strong')}</span> {t('home.types.heading.rest')}
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Kompleksowe boty AI dla każdego biznesu
+              {'>'} {t('home.types.desc1')}
               <br />
-              {'>'} Dostosowane do Twojej branży
+              {'>'} {t('home.types.desc2')}
             </p>
           </div>
 
@@ -212,39 +212,39 @@ const Index = () => {
             {[
               {
                 icon: DollarSign,
-                title: "Automatyzacja Sprzedaży",
-                description: "Lead qualification, follow-up, CRM integration",
-                features: ["Scoring leadów", "Auto follow-up", "Integracja CRM"]
+                title: t('home.types.sales.title'),
+                description: t('home.types.sales.desc'),
+                features: [t('home.types.sales.f1'), t('home.types.sales.f2'), t('home.types.sales.f3')]
               },
               {
                 icon: BarChart3,
-                title: "Marketing AI",
-                description: "Content generation, ad optimization, analytics",
-                features: ["Generowanie treści", "Optymalizacja reklam", "Analityka"]
+                title: t('home.types.marketing.title'),
+                description: t('home.types.marketing.desc'),
+                features: [t('home.types.marketing.f1'), t('home.types.marketing.f2'), t('home.types.marketing.f3')]
               },
               {
                 icon: MessageSquare,
-                title: "Obsługa Klienta",
-                description: "24/7 chatboty, ticket routing, sentiment analysis",
-                features: ["Chatbot 24/7", "Auto routing", "Analiza sentymentu"]
+                title: t('home.types.support.title'),
+                description: t('home.types.support.desc'),
+                features: [t('home.types.support.f1'), t('home.types.support.f2'), t('home.types.support.f3')]
               },
               {
                 icon: Database,
-                title: "Przetwarzanie Danych",
-                description: "ETL processes, reporting, data analysis",
-                features: ["ETL procesy", "Auto raporty", "Analiza danych"]
+                title: t('home.types.data.title'),
+                description: t('home.types.data.desc'),
+                features: [t('home.types.data.f1'), t('home.types.data.f2'), t('home.types.data.f3')]
               },
               {
                 icon: Zap,
-                title: "Workflow Automation",
-                description: "Process optimization, task assignment, approvals",
-                features: ["Optymalizacja procesów", "Przydzielanie zadań", "Approvals"]
+                title: t('home.types.workflow.title'),
+                description: t('home.types.workflow.desc'),
+                features: [t('home.types.workflow.f1'), t('home.types.workflow.f2'), t('home.types.workflow.f3')]
               },
               {
                 icon: Globe,
-                title: "E-commerce AI",
-                description: "Product recommendations, inventory, pricing",
-                features: ["Rekomendacje produktów", "Zarządzanie magazynem", "Pricing"]
+                title: t('home.types.ecommerce.title'),
+                description: t('home.types.ecommerce.desc'),
+                features: [t('home.types.ecommerce.f1'), t('home.types.ecommerce.f2'), t('home.types.ecommerce.f3')]
               }
             ].map((automation, index) => (
               <Card key={index} className="glass-effect hover:neon-glow transition-all duration-300 group border-border/50">
@@ -276,10 +276,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center">
             {[
-              { number: "500+", label: "Zautomatyzowanych Firm", icon: Users },
-              { number: "99.9%", label: "Uptime Botów", icon: Wifi },
-              { number: "50+", label: "Typów Automatyzacji", icon: Bot },
-              { number: "24/7", label: "Wsparcie Techniczne", icon: MessageCircle }
+              { number: '500+', label: t('home.stats.automatedFirms'), icon: Users },
+              { number: '99.9%', label: t('home.stats.uptime'), icon: Wifi },
+              { number: '50+', label: t('home.stats.types'), icon: Bot },
+              { number: '24/7', label: t('home.stats.support'), icon: MessageCircle }
             ].map((stat, index) => (
               <div key={index} className="group">
                 <div className="glass-effect p-6 rounded-lg hover:neon-glow transition-all duration-300">
@@ -299,17 +299,17 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <BarChart3 className="mr-2 h-4 w-4" />
-              PAKIETY AUTOMATYZACJI
+              {t('home.pricing.badge')}
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">WYBIERZ</span> SWÓJ PLAN
+              <span className="gradient-text">{t('home.pricing.heading.strong')}</span> {t('home.pricing.heading.rest')}
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Różne poziomy automatyzacji dla Twojego biznesu
+              {'>'} {t('home.pricing.line1')}
               <br />
-              {'>'} Skalowalne rozwiązania AI
+              {'>'} {t('home.pricing.line2')}
               <br />
-              {'>'} Pełne wsparcie i optymalizacje
+              {'>'} {t('home.pricing.line3')}
             </p>
           </div>
 
@@ -323,15 +323,15 @@ const Index = () => {
           <div className="text-center mb-16">
             <Badge className="mb-4 px-4 py-2 font-mono bg-accent/20 text-accent border-accent/50">
               <MessageCircle className="mr-2 h-4 w-4" />
-              SKONTAKTUJ SIĘ Z NAMI
+              {t('home.contact.badge')}
             </Badge>
             <h2 className="text-4xl md:text-6xl font-bold font-mono mb-6">
-              <span className="gradient-text">DARMOWA</span> KONSULTACJA
+              <span className="gradient-text">{t('home.contact.heading.strong')}</span> {t('home.contact.heading.rest')}
             </h2>
             <p className="text-xl text-muted-foreground font-mono max-w-3xl mx-auto">
-              {'>'} Omów swoje potrzeby automatyzacji z ekspertami
+              {'>'} {t('home.contact.line1')}
               <br />
-              {'>'} Otrzymaj spersonalizowaną strategię AI
+              {'>'} {t('home.contact.line2')}
             </p>
           </div>
 
@@ -340,23 +340,23 @@ const Index = () => {
             <Card className="glass-effect p-8">
               <CardHeader className="pb-6">
                 <CardTitle className="text-2xl font-mono text-foreground">
-                  {'>'} AUTOMATION_INQUIRY.EXE
+                  {t('home.contact.form.title')}
                 </CardTitle>
                 <CardDescription className="font-mono">
-                  Wypełnij formularz aby otrzymać bezpłatną konsultację
+                  {t('home.contact.form.desc')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-mono font-medium mb-2 text-foreground">
-                      FIRMA/IMIĘ:
+                      {t('home.contact.form.name')}
                     </label>
                     <Input
                       id="name"
                       value={contactForm.name}
                       onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                      placeholder="Wprowadź nazwę firmy lub imię..."
+                      placeholder={t('home.contact.form.namePlaceholder')}
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       required
                     />
@@ -364,14 +364,14 @@ const Index = () => {
                   
                   <div>
                     <label htmlFor="email" className="block text-sm font-mono font-medium mb-2 text-foreground">
-                      EMAIL_KONTAKTOWY:
+                      {t('home.contact.form.email')}
                     </label>
                     <Input
                       id="email"
                       type="email"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      placeholder="kontakt@firma.com"
+                      placeholder={t('home.contact.form.emailPlaceholder')}
                       className="font-mono bg-input/50 border-border/50 focus:border-primary/50"
                       required
                     />
@@ -403,10 +403,10 @@ const Index = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               {[
-                { icon: Mail, title: "EMAIL_BIZNESOWY", info: "automation@nextai.pl", desc: "Bezpośredni kontakt z ekspertami" },
-                { icon: Phone, title: "LINIA_KONSULTACYJNA", info: "+48 123 456 789", desc: "Rozmowa z doradcą automatyzacji" },
-                { icon: MapPin, title: "CENTRUM_AUTOMATYZACJI", info: "ul. AI 42, 00-001 Warszawa", desc: "Nasza centrala technologiczna" },
-                { icon: Bot, title: "STATUS_SYSTEMU", info: "ONLINE • 24/7", desc: "Boty pracują bez przerwy" }
+                { icon: Mail, title: t('contact.channels.email'), info: 'automation@nextai.pl', desc: t('contact.channels.emailDesc') },
+                { icon: Phone, title: t('contact.channels.phone'), info: '+48 123 456 789', desc: t('contact.channels.phoneDesc') },
+                { icon: MapPin, title: t('contact.channels.address'), info: 'ul. AI 42, 00-001 Warszawa', desc: t('contact.channels.addressDesc') },
+                { icon: Bot, title: t('contact.channels.status'), info: 'ONLINE • 24/7', desc: t('contact.channels.statusDesc') }
               ].map((contact, index) => (
                 <Card key={index} className="glass-effect p-6 hover:neon-glow transition-all duration-300 group">
                   <div className="flex items-start space-x-4">
@@ -430,12 +430,12 @@ const Index = () => {
       <section className="py-20 px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold font-mono mb-6">
-            <span className="gradient-text">GOTOWY NA</span> AUTOMATYZACJĘ?
+            <span className="gradient-text">{t('home.footer.heading.strong')}</span> {t('home.footer.heading.rest')}
           </h2>
           <p className="text-xl text-muted-foreground font-mono mb-8">
-            {'>'} Dołącz do firm, które już zautomatyzowały swoje procesy
+            {'>'} {t('home.footer.line1')}
             <br />
-            {'>'} Rozpocznij transformację cyfrową już dziś
+            {'>'} {t('home.footer.line2')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -444,7 +444,7 @@ const Index = () => {
               onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Bot className="mr-2 h-5 w-5" />
-              ROZPOCZNIJ AUTOMATYZACJĘ
+              {t('hero.start')}
             </Button>
             <Button 
               size="lg" 
@@ -453,7 +453,7 @@ const Index = () => {
               onClick={() => navigate('/courses')}
             >
               <Code className="mr-2 h-5 w-5" />
-              ZOBACZ KURSY
+              {t('home.footer.viewCourses')}
             </Button>
           </div>
         </div>
