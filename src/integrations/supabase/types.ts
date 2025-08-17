@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_stats: {
+        Row: {
+          active_subscriptions: number | null
+          course_completions: number | null
+          created_at: string
+          id: string
+          new_signups: number | null
+          stat_date: string
+          total_revenue: number | null
+          total_users: number | null
+        }
+        Insert: {
+          active_subscriptions?: number | null
+          course_completions?: number | null
+          created_at?: string
+          id?: string
+          new_signups?: number | null
+          stat_date?: string
+          total_revenue?: number | null
+          total_users?: number | null
+        }
+        Update: {
+          active_subscriptions?: number | null
+          course_completions?: number | null
+          created_at?: string
+          id?: string
+          new_signups?: number | null
+          stat_date?: string
+          total_revenue?: number | null
+          total_users?: number | null
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           content: string | null
@@ -62,6 +95,122 @@ export type Database = {
           title?: string
           updated_at?: string
           video_url?: string | null
+        }
+        Relationships: []
+      }
+      invoices: {
+        Row: {
+          amount: number
+          billing_address: Json | null
+          created_at: string
+          currency: string | null
+          due_date: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          line_items: Json
+          net_amount: number
+          notes: string | null
+          payment_id: string | null
+          pdf_url: string | null
+          status: string
+          tax_amount: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          billing_address?: Json | null
+          created_at?: string
+          currency?: string | null
+          due_date?: string
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          line_items?: Json
+          net_amount: number
+          notes?: string | null
+          payment_id?: string | null
+          pdf_url?: string | null
+          status?: string
+          tax_amount?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          billing_address?: Json | null
+          created_at?: string
+          currency?: string | null
+          due_date?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          line_items?: Json
+          net_amount?: number
+          notes?: string | null
+          payment_id?: string | null
+          pdf_url?: string | null
+          status?: string
+          tax_amount?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string | null
+          description: string | null
+          id: string
+          invoice_number: string | null
+          invoice_url: string | null
+          payment_type: string
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          id?: string
+          invoice_number?: string | null
+          invoice_url?: string | null
+          payment_type?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          id?: string
+          invoice_number?: string | null
+          invoice_url?: string | null
+          payment_type?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -230,7 +379,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_invoice_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      update_admin_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
