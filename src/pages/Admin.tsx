@@ -53,6 +53,45 @@ interface Subscription {
   } | null;
 }
 
+interface Payment {
+  id: string;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  payment_type: string;
+  description: string;
+  created_at: string;
+  profiles: {
+    full_name: string;
+    email: string;
+  };
+}
+
+interface Invoice {
+  id: string;
+  user_id: string;
+  invoice_number: string;
+  amount: number;
+  currency: string;
+  status: string;
+  issue_date: string;
+  created_at: string;
+  profiles: {
+    full_name: string;
+    email: string;
+  };
+}
+
+interface AdminStats {
+  stat_date: string;
+  total_revenue: number;
+  total_users: number;
+  active_subscriptions: number;
+  new_signups: number;
+  course_completions: number;
+}
+
 const Admin = () => {
   const { user, profile } = useAuth();
   const { toast } = useToast();
@@ -61,6 +100,9 @@ const Admin = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [adminStats, setAdminStats] = useState<AdminStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalUsers: 0,
