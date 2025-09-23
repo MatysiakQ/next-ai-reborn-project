@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeLanguageProvider } from "@/contexts/ThemeLanguageContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Layout from "@/components/layout/Layout";
 import Index from "@/pages/Index";
 import Auth from "@/pages/Auth";
@@ -27,10 +28,11 @@ const App = () => (
     <TooltipProvider>
       <ThemeLanguageProvider>
         <AuthProvider>
-          <Toaster />
-          <BrowserRouter>
-            <Layout>
-              <Routes>
+          <ErrorBoundary>
+            <Toaster />
+            <BrowserRouter>
+              <Layout>
+                <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/courses" element={<Courses />} />
@@ -42,11 +44,13 @@ const App = () => (
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/automations" element={<Automations />} />
                 <Route path="/payment-history" element={<PaymentHistory />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
           </BrowserRouter>
+          </ErrorBoundary>
         </AuthProvider>
       </ThemeLanguageProvider>
     </TooltipProvider>

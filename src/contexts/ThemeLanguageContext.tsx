@@ -344,6 +344,21 @@ const translations = {
     'automations.cta.subheading': 'Dołącz do tysięcy firm, które zautomatyzowały swoje procesy z NextAI',
     'automations.cta.viewPackages': 'Zobacz Pakiety',
     'automations.cta.bookDemo': 'Zarezerwuj Demo',
+
+    // Error messages and loading states
+    'error.generic': 'Wystąpił nieoczekiwany błąd',
+    'error.network': 'Problem z połączeniem internetowym',
+    'error.unauthorized': 'Nie masz uprawnień do tej akcji',
+    'error.notFound': 'Nie znaleziono żądanej strony',
+    'error.serverError': 'Błąd serwera, spróbuj ponownie później',
+    'error.tryAgain': 'Spróbuj ponownie',
+    'error.goBack': 'Wróć',
+    'error.contactSupport': 'Skontaktuj się z pomocą',
+
+    'loading.processing': 'Przetwarzanie...',
+    'loading.loading': 'Ładowanie...',
+    'loading.saving': 'Zapisywanie...',
+    'loading.sending': 'Wysyłanie...',
   },
   en: {
     // Navigation
@@ -674,6 +689,21 @@ const translations = {
     'automations.cta.subheading': 'Join thousands of companies that automated their processes with NextAI',
     'automations.cta.viewPackages': 'View Packages',
     'automations.cta.bookDemo': 'Book Demo',
+
+    // Error messages and loading states
+    'error.generic': 'An unexpected error occurred',
+    'error.network': 'Network connection problem',
+    'error.unauthorized': 'You are not authorized for this action',
+    'error.notFound': 'Requested page not found',
+    'error.serverError': 'Server error, please try again later',
+    'error.tryAgain': 'Try again',
+    'error.goBack': 'Go back',
+    'error.contactSupport': 'Contact support',
+
+    'loading.processing': 'Processing...',
+    'loading.loading': 'Loading...',
+    'loading.saving': 'Saving...',
+    'loading.sending': 'Sending...',
   }
 };
 

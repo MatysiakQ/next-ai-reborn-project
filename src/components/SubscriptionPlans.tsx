@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Check, Loader2 } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useThemeLanguage } from '@/contexts/ThemeLanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import { useAsyncOperation } from '@/hooks/useAsyncOperation';
 
 interface SubscriptionPlan {
   id: string;
@@ -26,71 +28,36 @@ const SubscriptionPlans = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
   const [isYearly, setIsYearly] = useState(false);
 
-  useEffect(() => {
-    fetchPlans();
-  }, []);
+  const { execute: executeSubscribe, loading: subscribeLoading } = useAsyncOperation(
+    async (plan: SubscriptionPlan) => {
+      if (!user) {
+        navigate('/auth');
+        return;
+      }
 
-  const fetchPlans = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('subscription_plans')
-        .select('*')
-        .eq('is_active', true)
-        .order('price_monthly', { ascending: true });
+      // Check if user already has this subscription
+      if (subscription?.is_subscribed && subscription.subscription_plan_id === plan.id) {
+        toast({
+          title: "Już masz tę subskrypcję",
+          description: "Przejdź do panelu użytkownika aby zarządzać swoją subskrypcją",
+        });
+        navigate('/dashboard');
+        return;
+      }
 
-      if (error) throw error;
-      setPlans(data || []);
-    } catch (error) {
-      console.error('Error fetching plans:', error);
-      toast({
-        title: "Błąd",
-        description: "Nie udało się załadować planów subskrypcji",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (plan.name === 'Enterprise') {
+        // Scroll to contact form for Enterprise plan
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
 
-  const handleSubscribe = async (plan: SubscriptionPlan) => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
+      const priceId = isYearly ? plan.stripe_price_id_yearly : plan.stripe_price_id_monthly;
+      if (!priceId) {
+        throw new Error("Ten plan nie ma skonfigurowanej ceny");
+      }
 
-    // Check if user already has this subscription
-    if (subscription?.is_subscribed && subscription.subscription_plan_id === plan.id) {
-      toast({
-        title: "Już masz tę subskrypcję",
-        description: "Przejdź do panelu użytkownika aby zarządzać swoją subskrypcją",
-      });
-      navigate('/dashboard');
-      return;
-    }
-
-    if (plan.name === 'Enterprise') {
-      // Scroll to contact form for Enterprise plan
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-
-    const priceId = isYearly ? plan.stripe_price_id_yearly : plan.stripe_price_id_monthly;
-    if (!priceId) {
-      toast({
-        title: "Błąd",
-        description: "Ten plan nie ma skonfigurowanej ceny",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setCheckoutLoading(plan.id);
-
-    try {
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId }
       });
@@ -101,17 +68,31 @@ const SubscriptionPlans = () => {
         // Open Stripe checkout in new tab
         window.open(data.url, '_blank');
       }
-    } catch (error) {
-      console.error('Error creating checkout:', error);
-      toast({
-        title: "Błąd płatności",
-        description: "Nie udało się utworzyć sesji płatności. Spróbuj ponownie.",
-        variant: "destructive"
-      });
-    } finally {
-      setCheckoutLoading(null);
+    },
+    {
+      errorMessage: "Nie udało się utworzyć sesji płatności. Spróbuj ponownie."
     }
-  };
+  );
+
+  const { execute: executeFetchPlans, loading: plansLoading } = useAsyncOperation(
+    async () => {
+      const { data, error } = await supabase
+        .from('subscription_plans')
+        .select('*')
+        .eq('is_active', true)
+        .order('price_monthly', { ascending: true });
+
+      if (error) throw error;
+      setPlans(data || []);
+    },
+    {
+      errorMessage: "Nie udało się załadować planów subskrypcji"
+    }
+  );
+
+  useEffect(() => {
+    executeFetchPlans();
+  }, []);
 
   const getCurrentUserPlan = () => {
     if (!subscription?.is_subscribed) return null;
@@ -120,10 +101,10 @@ const SubscriptionPlans = () => {
 
   const currentPlan = getCurrentUserPlan();
 
-  if (loading) {
+  if (plansLoading) {
     return (
       <div className="flex justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <LoadingSpinner size="lg" text="Ładowanie planów..." />
       </div>
     );
   }
@@ -227,14 +208,11 @@ const SubscriptionPlans = () => {
                 <Button
                   className="w-full"
                   variant={isPopular ? "default" : "outline"}
-                  onClick={() => handleSubscribe(plan)}
-                  disabled={checkoutLoading === plan.id || isCurrentPlan}
+                  onClick={() => executeSubscribe(plan)}
+                  disabled={subscribeLoading || isCurrentPlan}
                 >
-                  {checkoutLoading === plan.id ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t('pricing.redirecting')}
-                    </>
+                  {subscribeLoading ? (
+                    <LoadingSpinner size="sm" text="Przetwarzanie..." />
                   ) : isCurrentPlan ? (
                     t('pricing.current')
                   ) : plan.name === 'Enterprise' ? (

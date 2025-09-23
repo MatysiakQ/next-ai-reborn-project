@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useThemeLanguage } from "@/contexts/ThemeLanguageContext";
-import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Download, Eye, RefreshCw, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingSpinner from '@/components/ui/loading-spinner';
+import ErrorMessage from '@/components/ui/error-message';
+import EmptyState from '@/components/ui/empty-state';
+import { useAsyncOperation } from '@/hooks/useAsyncOperation';
 
 interface Payment {
   id: string;
@@ -41,19 +45,10 @@ export default function PaymentHistory() {
   const navigate = useNavigate();
   const [payments, setPayments] = useState<Payment[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'payments' | 'invoices'>('payments');
 
-  useEffect(() => {
-    if (user) {
-      fetchPaymentHistory();
-    }
-  }, [user]);
-
-  const fetchPaymentHistory = async () => {
-    try {
-      setLoading(true);
-
+  const { execute: fetchData, loading, error } = useAsyncOperation(
+    async () => {
       // Fetch payments
       const { data: paymentsData, error: paymentsError } = await supabase
         .from('payments')
@@ -74,20 +69,14 @@ export default function PaymentHistory() {
 
       setPayments(paymentsData || []);
       setInvoices(invoicesData || []);
-    } catch (error) {
-      console.error('Error fetching payment history:', error);
-      toast({
-        title: "Błąd",
-        description: "Nie udało się pobrać historii płatności",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+    },
+    {
+      errorMessage: "Nie udało się pobrać historii płatności"
     }
-  };
+  );
 
-  const generateInvoicePDF = async (invoiceId: string) => {
-    try {
+  const { execute: generatePDF, loading: pdfLoading } = useAsyncOperation(
+    async (invoiceId: string) => {
       const { data, error } = await supabase.functions.invoke('generate-invoice-pdf', {
         body: { invoiceId }
       });
@@ -99,17 +88,20 @@ export default function PaymentHistory() {
         description: "Faktura PDF została wygenerowana",
       });
 
-      // Refresh invoices to get updated PDF URL
-      fetchPaymentHistory();
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      toast({
-        title: "Błąd",
-        description: "Nie udało się wygenerować faktury PDF",
-        variant: "destructive",
-      });
+      // Refresh data to get updated PDF URL
+      await fetchData();
+    },
+    {
+      successMessage: "Faktura PDF została wygenerowana",
+      errorMessage: "Nie udało się wygenerować faktury PDF"
     }
-  };
+  );
+
+  useEffect(() => {
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   const downloadInvoice = (invoiceUrl: string, invoiceNumber: string) => {
     if (invoiceUrl.startsWith('data:')) {
@@ -175,7 +167,7 @@ export default function PaymentHistory() {
                 Przejrzyj historię swoich płatności i pobierz faktury
               </p>
             </div>
-            <Button onClick={fetchPaymentHistory} disabled={loading}>
+            <Button onClick={fetchData} disabled={loading}>
               <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
               Odśwież
             </Button>
@@ -316,7 +308,7 @@ export default function PaymentHistory() {
                                   <Button
                                     size="sm"
                                     variant="outline"
-                                    onClick={() => generateInvoicePDF(invoice.id)}
+                                    onClick={() => generatePDF(invoice.id)}
                                   >
                                     <Eye className="h-4 w-4 mr-1" />
                                     Generuj PDF
