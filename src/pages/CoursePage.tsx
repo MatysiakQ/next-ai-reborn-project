@@ -48,9 +48,8 @@ const CoursePage = () => {
 
   // Check if user has access to a specific tier
   const hasAccessToTier = (requiredTier: string): boolean => {
-    if (!user) return requiredTier === 'free';
-    
-    if (requiredTier === 'free') return true;
+    if (requiredTier === 'free') return true; // Darmowe kursy dla wszystkich
+    if (!user) return false; // Płatne kursy wymagają logowania
     
     if (!subscription?.is_subscribed) return false;
     

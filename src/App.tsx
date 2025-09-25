@@ -19,6 +19,7 @@ import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Automations from "@/pages/Automations";
 import PaymentHistory from "./pages/PaymentHistory";
+import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
                 <Route path="/course/:courseId" element={<CoursePage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<Admin />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
