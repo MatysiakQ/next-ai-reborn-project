@@ -383,6 +383,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      is_current_user_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       update_admin_stats: {
         Args: Record<PropertyKey, never>
         Returns: undefined
