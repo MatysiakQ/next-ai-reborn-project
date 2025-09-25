@@ -275,6 +275,21 @@ const Courses = () => {
             <CourseCard key={course.id} course={course} />
           ))}
         </div>
+
+        {/* CTA for free courses when not logged in */}
+        {!user && tier === 'free' && (
+          <Card className="mt-8 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+            <CardContent className="pt-6 text-center">
+              <h3 className="text-2xl font-bold mb-2">{t('courses.cta.login.title')}</h3>
+              <p className="text-muted-foreground mb-6">
+                {t('courses.cta.login.desc')}
+              </p>
+              <Button size="lg" onClick={() => navigate('/auth')}>
+                {t('courses.cta.login.button')}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
       </div>
     );
   };
@@ -378,21 +393,6 @@ const Courses = () => {
             />
           </TabsContent>
         </Tabs>
-
-        {/* CTA for non-logged in users */}
-        {!user && (
-          <Card className="mt-12 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-            <CardContent className="pt-6 text-center">
-              <h3 className="text-2xl font-bold mb-2">{t('courses.cta.login.title')}</h3>
-              <p className="text-muted-foreground mb-6">
-                {t('courses.cta.login.desc')}
-              </p>
-              <Button size="lg" onClick={() => navigate('/auth')}>
-                {t('courses.cta.login.button')}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
 
         {/* CTA for non-subscribers */}
         {user && !subscription?.is_subscribed && (
